@@ -1,0 +1,67 @@
+select * from submission;
+select * from Ques_Attempted;
+select * from Ques_Attempted natural join submission;
+select * from Ques_Attempted inner join submission on Ques_Attempted.Q_Id=Submission.Q_Id where 
+(submission.status='ac');
+select * from Registration inner join blog on Registration.Username=Blog.Username 
+inner join team
+on Registration.Username=Team.Member
+inner join rank
+on Registration.Username=Rank.Username
+order by Rank.Country_Rank;
+
+select * from Ques_Attempted inner join submission on Ques_Attempted.Q_Id=Submission.Q_Id where 
+(submission.status='ac');
+
+SELECT * FROM REGISTRATION;
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER DISPLAY_USER_CHANGES
+BEFORE UPDATE ON REGISTRATION
+END;
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER display_salary_changes 
+BEFORE DELETE OR INSERT OR UPDATE ON customer
+FOR EACH ROW 
+WHEN (NEW.DEPOT_NO > 0) 
+DECLARE 
+   sal_diff number; 
+BEGIN 
+   sal_diff := :NEW.CREDIT_LIMIT  - :OLD.CREDIT_LIMIT; 
+   dbms_output.put_line('Old salary: ' || :OLD.CREDIT_LIMIT); 
+   dbms_output.put_line('New salary: ' || :NEW.CREDIT_LIMIT); 
+   dbms_output.put_line('Salary difference: ' || sal_diff); 
+END; 
+
+
+
+
+
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER display_RANK_CHANGES 
+BEFORE DELETE OR INSERT OR UPDATE ON RANK
+FOR EACH ROW 
+WHEN (NEW.COUNTRY_RANK > 0) 
+DECLARE 
+   RANK_diff number; 
+BEGIN 
+   RANK_diff := :NEW.COUNTRY_RANK  - :OLD.COUNTRY_RANK; 
+   dbms_output.put_line('Old COUNTRY_RANK: ' || :OLD.COUNTRY_RANK); 
+   dbms_output.put_line('New COUNTRY_RANK: ' || :NEW.COUNTRY_RANK); 
+   dbms_output.put_line('COUNTRY RANK DIFFERENCE: ' || RANK_diff); 
+END; 
+
+SET SERVEROUTPUT ON
+CREATE OR REPLACE TRIGGER display_PLACE_CHANGES 
+BEFORE DELETE OR INSERT OR UPDATE ON REGISTRATION
+FOR EACH ROW 
+WHEN (NEW.PLACE IS NOT NULL) 
+DECLARE 
+    
+BEGIN 
+   dbms_output.put_line('OldPLACE: ' || :OLD.PLACE); 
+   dbms_output.put_line('New PLACE: ' || :NEW.PLACE); 
+END; 
+
+
+
+
